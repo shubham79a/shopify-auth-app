@@ -1,5 +1,5 @@
 // pages/api/auth/[...shopify].ts
-import { shopify } from '../../../shopify';
+import { shopify } from '../shopify';
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
