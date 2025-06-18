@@ -116,13 +116,12 @@
 // }
 
 
-
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 
-export default function Page() {
+function Dashboard() {
   const [shop, setShop] = useState('');
   const [host, setHost] = useState('');
   const [token, setToken] = useState('');
@@ -137,9 +136,8 @@ export default function Page() {
     if (hostParam) setHost(hostParam);
     if (tokenParam) setToken(tokenParam);
 
-    // 🔥 Clean the URL after grabbing params
     if (typeof window !== 'undefined' && shopParam && hostParam) {
-      window.history.replaceState({}, '', '/'); // or '/dashboard' if you have that route
+      window.history.replaceState({}, '', '/');
     }
   }, [searchParams]);
 
@@ -156,5 +154,13 @@ export default function Page() {
         <p className="text-gray-500">Loading URL parameters...</p>
       )}
     </main>
+  );
+}
+
+export default function Page() {
+  return (
+    <Suspense fallback={<div className="p-10 text-center">Loading...</div>}>
+      <Dashboard />
+    </Suspense>
   );
 }
